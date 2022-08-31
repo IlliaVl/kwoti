@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../abstracts/repositories/base_repository.dart';
@@ -5,12 +8,17 @@ import 'quote_state.dart';
 
 /// A cubit that keeps state of receiving random quote
 class QuoteCubit extends Cubit<QuoteState> {
-  final BaseRepository _repository;
+  @protected
+  final List<BaseRepository> repositories;
 
   /// Creates a new cubit using the supplied [repository]
-  QuoteCubit({required BaseRepository repository})
-      : _repository = repository,
+  QuoteCubit({required this.repositories})
+      : assert(repositories.isNotEmpty),
         super(const QuoteState());
+
+  @protected
+  BaseRepository get repository =>
+      repositories[Random().nextInt(repositories.length)];
 
   /// Loads random quote
   Future<void> load() async {
@@ -22,7 +30,7 @@ class QuoteCubit extends Cubit<QuoteState> {
     );
 
     try {
-      final quote = await _repository.getRandomQuote();
+      final quote = await repository.getRandomQuote();
 
       emit(
         state.copyWith(

@@ -3,35 +3,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kwoti/domain_layer/abstracts/repositories/base_repository.dart';
 
 import 'data_layer/network/garden_net_client.dart';
+import 'data_layer/network/storm_net_client.dart';
 import 'data_layer/providers/garden_provider.dart';
+import 'data_layer/providers/storm_provider.dart';
 import 'data_layer/repositories/garden_repository.dart';
+import 'data_layer/repositories/storm_repository.dart';
 import 'domain_layer/cubits/quote_cubit.dart';
 import 'presentation_layer/screens/quote_screen.dart';
 
 void main() {
-  runApp(MyApp(
-    // repository: StormRepository(
-    //   provider: StormProvider(
-    //     StormNetClient(),
-    //   ),
-    // ),
-    repository: GardenRepository(
+  runApp(MyApp(repositories: [
+    GardenRepository(
       provider: GardenProvider(
         GardenNetClient(),
       ),
     ),
-  ));
+    StormRepository(
+      provider: StormProvider(
+        StormNetClient(),
+      ),
+    ),
+  ]));
 }
 
 /// The application widget
 class MyApp extends StatelessWidget {
-  /// The repository responsible for getting all the data
-  final BaseRepository repository;
+  /// The repositories responsible for getting all the data
+  final List<BaseRepository> repositories;
 
   /// Creates the [MyApp]
   const MyApp({
     Key? key,
-    required this.repository,
+    required this.repositories,
   }) : super(key: key);
 
   // This widget is the root of your application.
@@ -42,14 +45,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<QuoteCubit>(
-            create: (context) => QuoteCubit(
-              repository: repository,
-            )..load(),
-          ),
-        ],
+      home: BlocProvider<QuoteCubit>(
+        create: (context) => QuoteCubit(
+          repositories: repositories,
+        )..load(),
         child: const QuoteScreen(),
       ),
     );

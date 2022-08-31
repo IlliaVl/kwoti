@@ -142,7 +142,7 @@ class _$StormQuoteDTODao extends StormQuoteDTODao {
   @override
   Future<void> insertStormQuoteDTO(StormQuoteDTO stormQuoteDTO) async {
     await _stormQuoteDTOInsertionAdapter.insert(
-        stormQuoteDTO, OnConflictStrategy.abort);
+        stormQuoteDTO, OnConflictStrategy.ignore);
   }
 }
 
@@ -179,6 +179,6 @@ class _$GardenQuoteDTODao extends GardenQuoteDTODao {
   @override
   Future<void> insertGardenQuoteDTO(GardenQuoteDTO gardenQuoteDTO) async {
     await _gardenQuoteDTOInsertionAdapter.insert(
-        gardenQuoteDTO, OnConflictStrategy.abort);
+        gardenQuoteDTO, OnConflictStrategy.ignore);
   }
 }

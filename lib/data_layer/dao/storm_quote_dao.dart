@@ -8,6 +8,6 @@ abstract class StormQuoteDTODao {
       '(SELECT id FROM StormQuoteDTO ORDER BY RANDOM() LIMIT 1)')
   Future<StormQuoteDTO?> findRandomStormQuoteDTO();
 
-  @insert
+  @Insert(onConflict: OnConflictStrategy.ignore)
   Future<void> insertStormQuoteDTO(StormQuoteDTO stormQuoteDTO);
 }

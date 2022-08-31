@@ -8,6 +8,6 @@ abstract class GardenQuoteDTODao {
       '(SELECT id FROM GardenQuoteDTO ORDER BY RANDOM() LIMIT 1)')
   Future<GardenQuoteDTO?> findRandomGardenQuoteDTO();
 
-  @insert
+  @Insert(onConflict: OnConflictStrategy.ignore)
   Future<void> insertGardenQuoteDTO(GardenQuoteDTO gardenQuoteDTO);
 }
