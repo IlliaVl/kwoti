@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 
 import '../../domain_layer/cubits/quote_cubit.dart';
 import '../../domain_layer/cubits/quote_state.dart';
@@ -85,6 +86,13 @@ class QuoteScreen extends StatelessWidget {
                                   textAlign: TextAlign.end,
                                 ),
                               ),
+                              const SizedBox(height: 16.0),
+                              TextButton(
+                                  onPressed: () =>
+                                      FlutterShareMe().shareToWhatsApp(
+                                        msg: state.quote?.quoteWithAuthor ?? '',
+                                      ),
+                                  child: const Text('Share to WhatsApp'))
                             ],
                           ),
                         ),

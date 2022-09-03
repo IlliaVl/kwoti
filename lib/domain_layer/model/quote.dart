@@ -12,6 +12,9 @@ class Quote {
   /// URL string
   final String? urlLink;
 
+  /// Returns combined quote with author
+  String get quoteWithAuthor => '"$quote" \n    $author';
+
   /// Creates new [Quote]
   Quote({
     required this.id,
