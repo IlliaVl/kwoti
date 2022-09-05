@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_share_me/flutter_share_me.dart';
 
 import '../../domain_layer/cubits/quote_cubit.dart';
 import '../../domain_layer/cubits/quote_state.dart';
+import '../helpers/share_quote.dart';
 
 /// Screen for displaying random quote
 /// Depends on [QuoteCubit] which state store fetched quotes
@@ -88,9 +88,9 @@ class QuoteScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 16.0),
                               TextButton(
-                                  onPressed: () =>
-                                      FlutterShareMe().shareToWhatsApp(
-                                        msg: state.quote?.quoteWithAuthor ?? '',
+                                  onPressed: () => ShareQuote.toWhatsApp(
+                                        context,
+                                        state.quote?.quoteWithAuthor ?? '',
                                       ),
                                   child: const Text('Share to WhatsApp'))
                             ],
